@@ -10,23 +10,30 @@ export class App extends Component {
     search: '',
   };
 
-  onInputChange = value => {
+  handleInputChange = value => {
     this.setState({
       search: value,
       page: 1,
     });
   };
 
+  handleLoadMoreBtn = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
+  };
+
   render() {
-    const { onInputChange } = this;
+    const { handleInputChange, handleLoadMoreBtn } = this;
     const { page, search } = this.state;
 
     return (
       <div className={styles.App}>
-        <Searchbar onSubmit={onInputChange} />
+        <Searchbar onSubmit={handleInputChange} />
         <ImageGallery
           searchQwery={search}
           page={page}
+          onBtnClick={handleLoadMoreBtn}
         />
       </div>
     );
