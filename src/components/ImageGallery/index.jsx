@@ -2,6 +2,7 @@ import { Component } from 'react';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 import imagesApi from 'services/imagesApi';
 import Button from 'components/Button';
+import Loader from 'components/Loader';
 import styles from './imageGallery.module.scss';
 
 class ImageGallery extends Component {
@@ -11,7 +12,7 @@ class ImageGallery extends Component {
         totalPages: 1,
     }
 
-    componentDidUpdate = async (prevProps, PrevState) => {
+    componentDidUpdate = async (prevProps, prevState) => {
         const { searchQwery, page } = this.props;
 
         if (prevProps.searchQwery !== searchQwery ||
@@ -75,6 +76,8 @@ class ImageGallery extends Component {
                         })}
                     </ul>
                 )}
+
+                {status === 'pending' && <Loader />}
 
                 {status === 'resolved' && page !== totalPages && (
                     <Button onBtnClick={onBtnClick} />
