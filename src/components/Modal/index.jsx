@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 import styles from './modal.module.scss';
 
 const modalRoot = document.getElementById('modal-root');
-console.log(modalRoot)
 
 class Modal extends Component {
     componentDidMount = () => {
@@ -37,8 +37,14 @@ class Modal extends Component {
                     <img src={largeImg} alt={imgDesc} />
                 </div>
             </div>, modalRoot
-        )
+        );
     };
 };
+
+Modal.propTypes = {
+    onShowModal: PropTypes.func.isRequired,
+    largeImg: PropTypes.string.isRequired,
+    imgDesc: PropTypes.string.isRequired,
+}
 
 export default Modal;

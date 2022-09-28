@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Notify } from 'notiflix';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 import imagesApi from 'services/imagesApi';
 import Button from 'components/Button';
@@ -14,9 +16,9 @@ class ImageGallery extends Component {
         largeImg: '',
         imgDesc: '',
         showModal: false,
-    }
+    };
 
-    componentDidUpdate = async (prevProps, prevState) => {
+    componentDidUpdate = async (prevProps, _) => {
         const { searchQwery, page } = this.props;
 
         if (prevProps.searchQwery !== searchQwery ||
@@ -29,7 +31,7 @@ class ImageGallery extends Component {
                         images: [],
                         status: 'idle',
                     });
-                    alert('Not found');
+                    Notify.failure(`We can not find ${searchQwery}. Try another request`);
                     return;
                 };
 
@@ -64,14 +66,12 @@ class ImageGallery extends Component {
     };
 
     handleGalleryItemClick = (largeImg, imgDesc) => {
-        console.log(largeImg)
         this.setState(({ showModal }) => ({
             showModal: !showModal,
             largeImg,
             imgDesc,
-        }))
-        console.log(this.state.largeImg)
-    }
+        }));
+    };
 
     render() {
         const { images, status, totalPages, showModal, largeImg, imgDesc } = this.state;
@@ -99,7 +99,7 @@ class ImageGallery extends Component {
                 )}
 
                 {status === 'error' && (
-                    <p>Ups, something was wrong!!!</p>
+                    <p>Ups, something went wrong. Please try again later</p>
                 )}
 
                 {showModal && (
@@ -111,8 +111,14 @@ class ImageGallery extends Component {
                 )}
 
             </>
-        )
+        );
     };
 };
+
+ImageGallery.propTypes = {
+    onBtnClick: PropTypes.func.isRequired,
+    page: PropTypes.number.isRequired,
+    searchQwery: PropTypes.string.isRequired,
+}
 
 export default ImageGallery;

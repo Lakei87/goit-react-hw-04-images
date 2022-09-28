@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+import { animateScroll as scroll } from 'react-scroll';
 import styles from './searchbar.module.scss';
 
 class Searchbar extends Component {
@@ -10,21 +12,24 @@ class Searchbar extends Component {
         const { value } = e.currentTarget;
         this.setState({
             search: value,
-        })
+        });
     };
 
     onSubmit = e => {
         e.preventDefault();
 
         this.props.onSubmit(this.state.search);
-    }
+        scroll.scrollToTop();
+    };
 
     render() {
         const { handleInputChange, onSubmit } = this;
         return (
             <header className={styles.searchbar}>
                 <form className={styles.searchForm} onSubmit={onSubmit}>
-                    <button type="submit" className={styles.searchForm__button}>
+                    <button
+                        type="submit"
+                        className={styles.searchForm__button}>
                         <span className={styles.searchForm__buttonLabel}>Search</span>
                     </button>
 
@@ -39,8 +44,12 @@ class Searchbar extends Component {
                     />
                 </form>
             </header>
-        )
+        );
     };
 };
+
+Searchbar.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+}
 
 export default Searchbar;

@@ -1,8 +1,9 @@
 import { Component } from 'react';
+import { animateScroll as scroll } from 'react-scroll'
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
-
 import styles from './App.module.scss';
+
 
 export class App extends Component {
   state = {
@@ -21,14 +22,18 @@ export class App extends Component {
     this.setState(prevState => ({
       page: prevState.page + 1,
     }));
-    window.scrollMore({
-      top: 100,
-    });
+    this.scrollMore();
+  };
+
+  scrollMore = () => {
+    const screenHeight = window.screen.height;
+    scroll.scrollMore(screenHeight / 1.5);
   };
 
   render() {
     const { handleInputChange, handleLoadMoreBtn } = this;
     const { page, search } = this.state;
+    console.log(this.props)
 
     return (
       <div className={styles.App}>

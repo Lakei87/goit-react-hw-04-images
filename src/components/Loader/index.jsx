@@ -1,5 +1,4 @@
 import { ThreeDots } from 'react-loader-spinner';
-// import styles from './loader.module.scss';
 
 const Loader = () => {
     return (
@@ -10,7 +9,7 @@ const Loader = () => {
             color = 'green'
             ariaLabel = 'three-dots-loading'     
             wrapperStyle = {{margin: 'auto'}}
-            // wrapperClass = {styles.loader}
+            wrapperClass = 'loader'
         />  
     );
 };
