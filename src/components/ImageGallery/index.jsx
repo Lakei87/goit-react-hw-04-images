@@ -3,6 +3,7 @@ import ImageGalleryItem from 'components/ImageGalleryItem';
 import imagesApi from 'services/imagesApi';
 import Button from 'components/Button';
 import Loader from 'components/Loader';
+import Modal from 'components/Modal';
 import styles from './imageGallery.module.scss';
 
 class ImageGallery extends Component {
@@ -10,6 +11,9 @@ class ImageGallery extends Component {
         images: [],
         status: 'idle',
         totalPages: 1,
+        largeImg: '',
+        imgDesc: '',
+        showModal: false,
     }
 
     componentDidUpdate = async (prevProps, prevState) => {
@@ -59,8 +63,18 @@ class ImageGallery extends Component {
             };
     };
 
+    handleGalleryItemClick = (largeImg, imgDesc) => {
+        console.log(largeImg)
+        this.setState(({ showModal }) => ({
+            showModal: !showModal,
+            largeImg,
+            imgDesc,
+        }))
+        console.log(this.state.largeImg)
+    }
+
     render() {
-        const { images, status, totalPages } = this.state;
+        const { images, status, totalPages, showModal, largeImg, imgDesc } = this.state;
         const { onBtnClick, page } = this.props;
 
         return (
@@ -68,10 +82,11 @@ class ImageGallery extends Component {
                 {images.length > 0 && (
                     <ul className={styles.imageGallery}>
                         {images.map(image => {
-                            const { id, webformatURL } = image;
+                            const { id } = image;
                             return <ImageGalleryItem
                                 key={id}
-                                webformatURL={webformatURL}
+                                imageData={image}
+                                onShowModal={this.handleGalleryItemClick}
                             />
                         })}
                     </ul>
@@ -86,6 +101,15 @@ class ImageGallery extends Component {
                 {status === 'error' && (
                     <p>Ups, something was wrong!!!</p>
                 )}
+
+                {showModal && (
+                    <Modal
+                        onShowModal={this.handleGalleryItemClick}
+                        largeImg={largeImg}
+                        imgDesc={imgDesc}
+                    />
+                )}
+
             </>
         )
     };

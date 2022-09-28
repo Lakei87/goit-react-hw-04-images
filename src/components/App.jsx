@@ -21,6 +21,9 @@ export class App extends Component {
     this.setState(prevState => ({
       page: prevState.page + 1,
     }));
+    window.scrollMore({
+      top: 100,
+    });
   };
 
   render() {
