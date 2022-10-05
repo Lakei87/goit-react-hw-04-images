@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import styles from './imageGalleryItem.module.scss';
 
-const ImageGalleryItem = ({ imageData, onShowModal }) => {
+export default function ImageGalleryItem({imageData, onShowModal}) {
     const { tags, webformatURL, largeImageURL } = imageData;
 
     return (
@@ -24,7 +24,5 @@ ImageGalleryItem.propTypes = {
         largeImageURL: PropTypes.string.isRequired,
         tags: PropTypes.string.isRequired,
     },).isRequired,
-    onShowModal:PropTypes.func.isRequired,
-}
-
-export default ImageGalleryItem;
+    onShowModal: PropTypes.func.isRequired,
+};
